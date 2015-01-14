@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">eagle</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="Credits_button">Credits</string>
+    <string name="Credits_text">Credits</string>
+    <string name="exit_game_text">Exit Game</string>
+
+</resources>
