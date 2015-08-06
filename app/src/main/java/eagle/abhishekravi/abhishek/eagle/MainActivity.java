@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -14,6 +15,16 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Button credits = (Button) findViewById(R.id.credits_button);
+
+        credits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent creditInt = new Intent(v.getContext(), Credits.class);
+                startActivity(creditInt);
+            }
+        });
     }
 
 
@@ -39,12 +50,18 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void exitGame(View v){
+        finish();
+        System.exit(0);
+
+    }
+
     public void Secondscreen(View view) {
 
         Intent getNameScreenIntent;
         getNameScreenIntent = new Intent(this, secondScreen.class);
         startActivity(getNameScreenIntent);
-        finish();
+        //finish();
 
 
     }
