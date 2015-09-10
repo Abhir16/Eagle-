@@ -2,6 +2,8 @@ package eagle.abhishekravi.abhishek.eagle;
 
 import android.app.Activity;
 import java.util.*;
+
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -16,8 +18,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import android.os.Handler;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.logging.LogRecord;
@@ -37,6 +41,7 @@ public class secondScreen extends Activity implements View.OnClickListener {
     int lay1, lay2, shuffleCount = 0, gameCount = 0;
     ImageButton first, second;
 
+    int gameFinished = 0;
     LinearLayout layout;
     boolean isClickable = true;
 
@@ -95,58 +100,33 @@ public class secondScreen extends Activity implements View.OnClickListener {
 
         iconRandomizer();
 
-
-
     };
-    public void buttonEnabler() {
-//
-        if (isClickable) {
-            b1.setClickable(true);
-            b2.setClickable(true);
-            b3.setClickable(true);
-            b4.setClickable(true);
-            b5.setClickable(true);
-            b6.setClickable(true);
-            b7.setClickable(true);
-            b8.setClickable(true);
-            b9.setClickable(true);
-            b10.setClickable(true);
-            b11.setClickable(true);
-            b12.setClickable(true);
-            b13.setClickable(true);
-            b14.setClickable(true);
-            b15.setClickable(true);
-            b16.setClickable(true);
-            b17.setClickable(true);
-            b18.setClickable(true);
-            b19.setClickable(true);
-            b20.setClickable(true);
 
-        }
-        else{
-            b1.setClickable(false);
-            b2.setClickable(false);
-            b3.setClickable(false);
-            b4.setClickable(false);
-            b5.setClickable(false);
-            b6.setClickable(false);
-            b7.setClickable(false);
-            b8.setClickable(false);
-            b9.setClickable(false);
-            b10.setClickable(false);
-            b11.setClickable(false);
-            b12.setClickable(false);
-            b13.setClickable(false);
-            b14.setClickable(false);
-            b15.setClickable(false);
-            b16.setClickable(false);
-            b17.setClickable(false);
-            b18.setClickable(false);
-            b19.setClickable(false);
-            b20.setClickable(false);
-        }
+
+    public void gameEndDialog(){
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.matches_complete_dialog);
+        dialog.setTitle("Game Over");
+
+        TextView txt = (TextView) dialog.findViewById(R.id.text);
+        ImageView img = (ImageView) dialog.findViewById(R.id.image);
+        img.setImageResource(R.drawable.thumbs_up_color);
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        dialog.show();
+
+
     }
-
     public void randomCheck(ImageButton btn, int image) {
 
         if (gameCount <= 2) {
@@ -162,7 +142,7 @@ public class secondScreen extends Activity implements View.OnClickListener {
                 Log.d("isCheck", String.valueOf(isClickable));
                 second = btn;
                 lay2 = image;
-                buttonEnabler();
+                //buttonEnabler();
 
 
                 if (lay1 != lay2) {
@@ -176,7 +156,7 @@ public class secondScreen extends Activity implements View.OnClickListener {
                             first.setEnabled(true);
                             second.setEnabled(true);
                             isClickable = true;
-                            buttonEnabler();
+                           // buttonEnabler();
 
                         }
                     }, 1000);
@@ -185,11 +165,15 @@ public class secondScreen extends Activity implements View.OnClickListener {
                 else if (lay1 == lay2){
                     Toast.makeText(this, "MATCH!",Toast.LENGTH_SHORT).show();
                     isClickable = true;
-                    buttonEnabler();
+                    gameFinished++;
+                    //buttonEnabler();
+                    if (gameFinished  >= 10){
+                        gameEndDialog();
+                    }
 
                 }
                 gameCount = 0;
-                // isClickable = true;
+
 
             }
 
